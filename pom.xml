@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <log4j.version>2.9.1</log4j.version>
+        <netty.version>4.1.18.Final</netty.version>
     </properties>
     <dependencies>
         <dependency>
@@ -21,6 +22,14 @@
             <artifactId>log4j-web</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>
