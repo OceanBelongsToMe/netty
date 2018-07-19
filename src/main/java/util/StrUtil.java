@@ -288,39 +288,6 @@ public class StrUtil {
         return String.valueOf(d);
     }
 
-    // /**
-    // * 判断是否是规范的系统错误
-    // *
-    // * @author mWX177641
-    // *
-    // * @param servletRequest servlet对象
-    // * @return true：是规范的错误
-    // */
-    // public static boolean isError(ServletRequest servletRequest)
-    // {
-    // String desc = StringTools.nvl(PortalCacheManager.getConfigValue("client_systemerror_is_true"));
-    //
-    // String[] str = desc.split(",");
-    //
-    // boolean bool = false;
-    //
-    // // 客户端请求响应结果码,如果系统出现问题，会在request里设置这个字段的错误码
-    // String RESULT_CODE_KEY = PortalConfig.get("http-header/result-code", "result-code");
-    //
-    // HttpServletRequest request = (HttpServletRequest)servletRequest;
-    //
-    // String result = (String)request.getAttribute(RESULT_CODE_KEY);
-    //
-    // for (int i = 0; i < str.length; i++)
-    // {
-    // if (str[i].equals(result))
-    // {
-    // bool = true;
-    // }
-    // }
-    //
-    // return bool;
-    // }
 
     /**
      * 判断一个字符串是否全部是整数
@@ -376,7 +343,7 @@ public class StrUtil {
      * @return
      * @author c00126000
      */
-    public static double toDouble(String str, double def) {
+    public static double toDouble(String str, Double def) {
         double result = def;
         try {
             result = Double.parseDouble(str);
