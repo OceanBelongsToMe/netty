@@ -37,7 +37,7 @@ public class NettyTimeServerHandle extends ChannelInboundHandlerAdapter
         System.out.println("request:" + request + ";counter:" + ++counter);
 
         String result =
-            "QTO🍎".equals(request) ? DateUtil.GetNowDate(DateUtil.HOR_SEC_FORMAT) + "🍅🍅" : "bad 🍎🍎🍎🍎🍎🍎";
+            "🍎".equals(request) ? DateUtil.GetNowDate(DateUtil.HOR_SEC_FORMAT) + "🍅🍅" : "bad 🍎🍎🍎🍎🍎🍎";
 
         result = result + System.getProperty("line.separator");
         ByteBuf response = Unpooled.copiedBuffer(result.getBytes());

@@ -27,8 +27,8 @@ public class NettyTimeClientHandle extends ChannelInboundHandlerAdapter
     public NettyTimeClientHandle()
         throws UnsupportedEncodingException
     {
-        String str = "QTO🍎";
-        req = (str+"🍎" + System.getProperty("line.separator")).getBytes();
+        String str = "🍎";
+        req = (str + System.getProperty("line.separator")).getBytes();
         //message = Unpooled.buffer(req.length);
         //message.writeBytes(req);
         System.out.println(new String(req, "UTF-8"));
