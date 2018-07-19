@@ -4,6 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import util.EmojiUtil;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * <一句话描述>
@@ -13,32 +16,54 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class NettyTimeClientHandle extends ChannelInboundHandlerAdapter {
-    private final ByteBuf message;
+public class NettyTimeClientHandle extends ChannelInboundHandlerAdapter
+{
+    private ByteBuf message;
 
-    public NettyTimeClientHandle() {
+    private byte[] req;
 
-        byte[] bytes = "QTO".getBytes();
-        message = Unpooled.buffer(bytes.length);
-        message.writeBytes(bytes);
+    private int counter;
+
+    public NettyTimeClientHandle()
+        throws UnsupportedEncodingException
+    {
+        String str = EmojiUtil.emojiConvert2UTF("QTO🍎啊");
+        System.out.println(str);
+        req = (str + System.getProperty("line.separator")).getBytes();
+        //message = Unpooled.buffer(req.length);
+        //message.writeBytes(req);
+        System.out.println(new String(req,"UTF-8"));
+
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(message);
+    public void channelActive(ChannelHandlerContext ctx)
+        throws Exception
+    {
+
+        for (int i = 0; i < 100; i++)
+        {
+            message = Unpooled.buffer(req.length);
+            message.writeBytes(req);
+            ctx.writeAndFlush(message);
+            message = null;
+        }
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
+    public void channelRead(ChannelHandlerContext ctx, Object msg)
+        throws Exception
+    {
+        ByteBuf buf = (ByteBuf)msg;
         byte[] bytes = new byte[buf.readableBytes()];
         buf.readBytes(bytes);
-        System.out.println("ha ha ha ha,Now is " + new String(bytes, "UTF-8"));
+        System.out.println("ha ha ha ha,Now is " + new String(bytes, "UTF-8") + "counter:" + ++counter);
     }
 
-
     @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
+        throws Exception
+    {
         System.out.println("释放资源");
         //释放资源
         ctx.close();
