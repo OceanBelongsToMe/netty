@@ -32,7 +32,7 @@ public class NettyTimeClientHandle extends ChannelInboundHandlerAdapter
         req = (str + System.getProperty("line.separator")).getBytes();
         //message = Unpooled.buffer(req.length);
         //message.writeBytes(req);
-        System.out.println(new String(req,"UTF-8"));
+        System.out.println(new String(req, "UTF-8"));
 
     }
 
@@ -54,10 +54,8 @@ public class NettyTimeClientHandle extends ChannelInboundHandlerAdapter
     public void channelRead(ChannelHandlerContext ctx, Object msg)
         throws Exception
     {
-        ByteBuf buf = (ByteBuf)msg;
-        byte[] bytes = new byte[buf.readableBytes()];
-        buf.readBytes(bytes);
-        System.out.println("ha ha ha ha,Now is " + new String(bytes, "UTF-8") + "counter:" + ++counter);
+        String response = (String)msg;
+        System.out.println("ha ha ha ha,Now is " + response + "counter:" + ++counter);
     }
 
     @Override

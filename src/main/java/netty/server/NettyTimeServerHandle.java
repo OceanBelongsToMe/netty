@@ -31,14 +31,8 @@ public class NettyTimeServerHandle extends ChannelInboundHandlerAdapter
     public void channelRead(ChannelHandlerContext ctx, Object msg)
         throws Exception
     {
-        ByteBuf byteBuffer = (ByteBuf)msg;
 
-        byte[] bytes = new byte[byteBuffer.readableBytes()];
-        byteBuffer.readBytes(bytes);
-        String request =
-            new String(bytes, "UTF-8");
-        request = request.substring(0, bytes.length - System.getProperty("line.separator").length());
-        System.out.println(request);
+        String request = (String)msg;
         request = EmojiUtil.emojiRecovery(request);
         System.out.println("request:" + request + ";counter:" + ++counter);
 
