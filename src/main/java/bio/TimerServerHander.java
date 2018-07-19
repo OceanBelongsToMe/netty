@@ -1,5 +1,6 @@
 package bio;
 
+import util.DateUtil;
 import util.Utils;
 
 import java.io.BufferedReader;
@@ -37,7 +38,7 @@ public class TimerServerHander implements Runnable {
                 if (body == null)
                     break;
                 System.out.println("the client order is " + body);
-                out.println("QTO".equals(body) ? new Date(System.currentTimeMillis()).toString() : "错误的命令");
+                out.println("QTO".equals(body) ? DateUtil.getCurrentTime(DateUtil.HOR_SEC_FORMAT)+"🍅" : "错误的命令");
             }
 
         } catch (IOException e) {

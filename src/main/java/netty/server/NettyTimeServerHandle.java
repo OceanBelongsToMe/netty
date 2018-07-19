@@ -31,7 +31,7 @@ public class NettyTimeServerHandle extends ChannelInboundHandlerAdapter {
         byteBuffer.readBytes(bytes);
         String request = new String(bytes, "UTF-8");
 
-        String result = "QTO".equals(request.trim()) ? DateUtil.GetNowDate(DateUtil.HOR_SEC_FORMAT) : "bad request!";
+        String result = "QTO".equals(request.trim()) ? DateUtil.GetNowDate(DateUtil.HOR_SEC_FORMAT) +"🍅🍅": "bad request!";
 
         ByteBuf response = Unpooled.copiedBuffer(result.getBytes());
         ctx.write(response);
