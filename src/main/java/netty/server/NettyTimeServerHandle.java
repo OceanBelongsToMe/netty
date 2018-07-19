@@ -33,11 +33,11 @@ public class NettyTimeServerHandle extends ChannelInboundHandlerAdapter
     {
 
         String request = (String)msg;
-        request = EmojiUtil.emojiRecovery(request);
+        //request = EmojiUtil.emojiRecovery(request);
         System.out.println("request:" + request + ";counter:" + ++counter);
 
         String result =
-            "QTO".equals(request) ? DateUtil.GetNowDate(DateUtil.HOR_SEC_FORMAT) + "🍅🍅" : "bad 🍎🍎🍎🍎🍎🍎";
+            "QTO🍎".equals(request) ? DateUtil.GetNowDate(DateUtil.HOR_SEC_FORMAT) + "🍅🍅" : "bad 🍎🍎🍎🍎🍎🍎";
 
         result = result + System.getProperty("line.separator");
         ByteBuf response = Unpooled.copiedBuffer(result.getBytes());

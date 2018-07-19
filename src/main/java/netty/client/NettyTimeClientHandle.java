@@ -27,9 +27,8 @@ public class NettyTimeClientHandle extends ChannelInboundHandlerAdapter
     public NettyTimeClientHandle()
         throws UnsupportedEncodingException
     {
-        String str = EmojiUtil.emojiConvert2UTF("QTO🍎啊");
-        System.out.println(str);
-        req = (str + System.getProperty("line.separator")).getBytes();
+        String str = "QTO🍎";
+        req = (str+"🍎" + System.getProperty("line.separator")).getBytes();
         //message = Unpooled.buffer(req.length);
         //message.writeBytes(req);
         System.out.println(new String(req, "UTF-8"));
