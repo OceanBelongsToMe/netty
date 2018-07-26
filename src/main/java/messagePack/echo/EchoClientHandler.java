@@ -20,16 +20,16 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter
 {
     private int counter;
 
-    static final String ECHO_REQ = "好🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎";
+//    static final String ECHO_REQ = "好🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎🍎";
 
     @Override
     public void channelActive(ChannelHandlerContext ctx)
         throws Exception
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 1; i <= 10; i++)
         {
-            ctx.writeAndFlush(ECHO_REQ);
-//            ctx.writeAndFlush(new MsgPackDomain(i));
+//            ctx.writeAndFlush(ECHO_REQ);
+            ctx.writeAndFlush(new MsgPackDomain(10));
         }
     }
 
@@ -37,9 +37,9 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter
     public void channelRead(ChannelHandlerContext ctx, Object msg)
         throws Exception
     {
-
-        System.out.println("次数是：" + ++counter + "；苹果：" + msg);
-        System.out.println(msg.getClass());
+        MsgPackDomain msgPackDomain = (MsgPackDomain)msg;
+        System.out.println(
+            "次数是：" + ++counter + "；苹果：" + msgPackDomain.getApple() + "; 番茄：" + msgPackDomain.getTomato());
 //        if (counter < 5)
 //        { //控制运行次数，因为不加这个控制直接调用下面代码的话，客户端和服务端会形成闭环循环，一直运行
 //            ctx.write(msg);
@@ -61,7 +61,4 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter
         ctx.close();
     }
 
-    class UserInfo
-    {
-    }
 }

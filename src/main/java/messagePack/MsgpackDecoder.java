@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import org.msgpack.MessagePack;
+import org.msgpack.template.Template;
 import org.msgpack.template.Templates;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class MsgpackDecoder extends MessageToMessageDecoder<ByteBuf>
         byteBuf.getBytes(byteBuf.readerIndex(), array, 0, length);
         MessagePack msgPack = new MessagePack();
         //设置解码类型
-        list.add(msgPack.read(array, Templates.TString));
-//        list.add(msgPack.read(array,MsgPackDomain.class));
+//        list.add(msgPack.read(array, Templates.TString));
+        list.add(msgPack.read(array,MsgPackDomain.class));
     }
 }

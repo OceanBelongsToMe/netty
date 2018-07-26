@@ -1,6 +1,9 @@
 package messagePack;
 
-import org.msgpack.annotation.MessagePackBeans;
+import org.msgpack.annotation.Index;
+import org.msgpack.annotation.Message;
+
+import java.io.Serializable;
 
 /**
  * <一句话描述>
@@ -10,20 +13,28 @@ import org.msgpack.annotation.MessagePackBeans;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-@MessagePackBeans
-public class MsgPackDomain
+@Message
+public class MsgPackDomain implements Serializable
 {
+
+    private static final long serialVersionUID = -3073612906010212754L;
+
     private String apple;
 
     private String tomato;
 
+    public MsgPackDomain()
+    {
+    }
+
     public MsgPackDomain(int x)
     {
         apple = "";
+        tomato = "";
         for (int i = 0; i < x; i++)
         {
-            apple += "🍅";
-            tomato += "🍎";
+            apple += "🍅🌶🍏🌽🥚🍟🥗";
+            tomato += "🍎🥔";
         }
 
     }

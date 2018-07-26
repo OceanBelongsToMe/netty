@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import messagePack.MsgPackDomain;
 import util.EmojiUtil;
 
 /**
@@ -22,7 +23,8 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter
     public void channelRead(ChannelHandlerContext ctx, Object msg)
         throws Exception
     {
-        System.out.println("request [" + msg + "]" + ++counter);
+        MsgPackDomain ms = (MsgPackDomain)msg;
+        System.out.println("request [" + ms.getApple() + ms.getTomato() + "]" + ++counter);
         System.out.println(msg.getClass());
         ctx.writeAndFlush(msg);
     }
