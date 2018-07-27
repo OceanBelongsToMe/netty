@@ -7,6 +7,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import messagePack.MsgPackDomain;
 import util.EmojiUtil;
 
+import java.util.Map;
+
 /**
  * <一句话描述>
  *
@@ -23,10 +25,8 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter
     public void channelRead(ChannelHandlerContext ctx, Object msg)
         throws Exception
     {
-        MsgPackDomain ms = (MsgPackDomain)msg;
-        System.out.println("request [" + ms.getApple() + ms.getTomato() + "]" + ++counter);
-        System.out.println(msg.getClass());
-        ctx.writeAndFlush(msg);
+        //DecodeMyObject(ctx, msg);
+        DecodeMap(ctx, msg);
     }
 
     @Override
@@ -36,4 +36,23 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter
         cause.printStackTrace();
         ctx.close();
     }
+
+    private void DecodeMyObject(ChannelHandlerContext ctx, Object msg)
+    {
+        MsgPackDomain ms = (MsgPackDomain)msg;
+        System.out.println("request [" + ms.getApple() + ms.getTomato() + "]" + ++counter);
+        System.out.println(msg.getClass());
+        ctx.writeAndFlush(msg);
+    }
+
+    private void DecodeMap(ChannelHandlerContext ctx, Object msg)
+    {
+        Map ms = (Map)msg;
+        MsgPackDomain mapMsg= (MsgPackDomain)ms.get(1);
+        System.out.println("request [" +  mapMsg.getApple() + mapMsg.getTomato() + "]" + ++counter);
+        System.out.println(mapMsg.getFish());
+        System.out.println(msg.getClass());
+        ctx.writeAndFlush(msg);
+    }
+
 }

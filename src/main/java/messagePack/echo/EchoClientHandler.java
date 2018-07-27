@@ -8,6 +8,9 @@ import messagePack.MsgPackDomain;
 import messagePack.MsgpackDecoder;
 import util.EmojiUtil;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <一句话描述>
  *
@@ -26,20 +29,26 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter
     public void channelActive(ChannelHandlerContext ctx)
         throws Exception
     {
+        Map<Integer, MsgPackDomain> map = new HashMap<Integer, MsgPackDomain>();
         for (int i = 1; i <= 10; i++)
         {
 //            ctx.writeAndFlush(ECHO_REQ);
-            ctx.writeAndFlush(new MsgPackDomain(10));
+//            ctx.writeAndFlush(new MsgPackDomain(10));
+            map.put(i, new MsgPackDomain(10));
         }
+        ctx.writeAndFlush(map);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)
         throws Exception
     {
-        MsgPackDomain msgPackDomain = (MsgPackDomain)msg;
+        //MsgPackDomain msgPackDomain = (MsgPackDomain)msg;
+        MsgPackDomain msgPackDomain = (MsgPackDomain)((Map)msg).get(1);
         System.out.println(
-            "次数是：" + ++counter + "；苹果：" + msgPackDomain.getApple() + "; 番茄：" + msgPackDomain.getTomato());
+            "次数是：" + ++counter + "；苹果：" + msgPackDomain.getApple()
+                + "; 番茄：" + msgPackDomain.getTomato());
+        System.out.println(msgPackDomain.getFish());
 //        if (counter < 5)
 //        { //控制运行次数，因为不加这个控制直接调用下面代码的话，客户端和服务端会形成闭环循环，一直运行
 //            ctx.write(msg);

@@ -4,6 +4,8 @@ import org.msgpack.annotation.Index;
 import org.msgpack.annotation.Message;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <一句话描述>
@@ -23,6 +25,8 @@ public class MsgPackDomain implements Serializable
 
     private String tomato;
 
+    private List<String> fish = new ArrayList<>();
+
     public MsgPackDomain()
     {
     }
@@ -35,6 +39,7 @@ public class MsgPackDomain implements Serializable
         {
             apple += "🍅🌶🍏🌽🥚🍟🥗";
             tomato += "🍎🥔";
+            fish.add("🐠🐠🐟");
         }
 
     }
@@ -59,12 +64,23 @@ public class MsgPackDomain implements Serializable
         this.tomato = tomato;
     }
 
+    public void setFish(List<String> fish)
+    {
+        this.fish = fish;
+    }
+
+    public List<String> getFish()
+    {
+        return fish;
+    }
+
     @Override
     public String toString()
     {
         return "MsgPackDomain{" +
             "apple='" + apple + '\'' +
             ", tomato='" + tomato + '\'' +
+            ", fish=" + fish +
             '}';
     }
 }

@@ -5,10 +5,15 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import org.msgpack.MessagePack;
+import org.msgpack.packer.Packer;
+import org.msgpack.template.MapTemplate;
 import org.msgpack.template.Template;
+import org.msgpack.template.TemplateRegistry;
 import org.msgpack.template.Templates;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 解码器
@@ -31,8 +36,49 @@ public class MsgpackDecoder extends MessageToMessageDecoder<ByteBuf>
         array = new byte[length];
         byteBuf.getBytes(byteBuf.readerIndex(), array, 0, length);
         MessagePack msgPack = new MessagePack();
-        //设置解码类型
-//        list.add(msgPack.read(array, Templates.TString));
-        list.add(msgPack.read(array,MsgPackDomain.class));
+
+        //decodeString(list,msgPack,array);
+
+        //decodeAnyObject(list,msgPack,array);
+
+        decodeMapHaveObject(list,msgPack,array);
+
     }
+
+    private void decodeString(List<Object> list, MessagePack msgPack, byte[] array)
+        throws Exception
+    {
+        //解码String类型
+        list.add(msgPack.read(array, Templates.TString));
+    }
+
+    private void decodeAnyObject(List<Object> list, MessagePack msgPack, byte[] array)
+        throws Exception
+    {
+        //解码任意类
+        list.add(msgPack.read(array, MsgPackDomain.class));
+    }
+
+    private void decodeMapHaveObject(List<Object> list, MessagePack msgPack, byte[] array)
+        throws Exception
+    {
+        //解码包含任意类型的map
+        //任意类型，不需要注册
+        Template temp = msgPack.lookup(MsgPackDomain.class);
+        list.add(msgPack.read(array, new MapTemplate(Templates.TInteger, temp)));
+
+//        Template msgTemplate = null;
+//        try
+//        {
+//            TemplateRegistry registry = new TemplateRegistry(null);
+//            registry.register(MsgPackDomain.class);
+//            msgTemplate = registry.lookup(MsgPackDomain.class);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        list.add(msgPack.read(array, new MapTemplate(Templates.TInteger,msgTemplate)));
+    }
+
 }
