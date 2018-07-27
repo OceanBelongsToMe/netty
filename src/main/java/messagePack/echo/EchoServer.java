@@ -55,8 +55,8 @@ public class EchoServer
                         //ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
                         //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
                         //socketChannel.pipeline().addLast(new StringDecoder());
-
-                        socketChannel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(4));
+                        //在MessagePack编码器前增加2个字节的消息长度
+                        socketChannel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(2));
                         socketChannel.pipeline().addLast("msgpack encoder", new MsgpackEncoder());
 
                         socketChannel.pipeline().addLast(new EchoServerHandler());

@@ -79,6 +79,7 @@ public class MsgpackDecoder extends MessageToMessageDecoder<ByteBuf>
 //            e.printStackTrace();
 //        }
 //        list.add(msgPack.read(array, new MapTemplate(Templates.TInteger,msgTemplate)));
+
     }
 
 }

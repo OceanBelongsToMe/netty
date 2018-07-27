@@ -43,6 +43,7 @@ public class EchoClient
                     protected void initChannel(SocketChannel socketChannel)
                         throws Exception
                     {
+                        //在MessagePack解码器前增加LengthFieldBasedFrameDecoder，用于处理半包消息
                         socketChannel.pipeline()
                             .addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4));
 
@@ -51,7 +52,8 @@ public class EchoClient
                         //ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
                         //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
                         //socketChannel.pipeline().addLast(new StringDecoder());
-                        socketChannel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(4));
+                        //在MessagePack编码器前增加LengthFieldPrepender，在ByteBuf前增加2个字节的消息长度
+                        socketChannel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(2));
 
                         socketChannel.pipeline().addLast("msgpack encoder", new MsgpackEncoder());
                         socketChannel.pipeline().addLast(new EchoClientHandler());
