@@ -36,6 +36,12 @@
             <version>${msgpack.version}</version>
         </dependency>
 
+        <dependency>
+        <groupId>com.ocean.study</groupId>
+        <artifactId>protoBuf</artifactId>
+        <version>0.2.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
