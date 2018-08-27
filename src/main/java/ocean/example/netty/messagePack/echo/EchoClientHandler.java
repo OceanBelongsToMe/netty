@@ -1,8 +1,8 @@
-package ocean.example.messagePack.echo;
+package ocean.example.netty.messagePack.echo;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import ocean.example.messagePack.MsgPackDomain;
+import ocean.example.netty.messagePack.MsgPackDomain;
 
 import java.util.HashMap;
 import java.util.Map;

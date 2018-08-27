@@ -1,4 +1,4 @@
-package ocean.example.messagePack;
+package ocean.example.netty.messagePack;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

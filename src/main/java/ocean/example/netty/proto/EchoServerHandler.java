@@ -1,4 +1,4 @@
-package ocean.example.proto;
+package ocean.example.netty.proto;
 
 import com.ocean.study.service.MytestProto.SignInPrize;
 import io.netty.channel.ChannelHandlerContext;

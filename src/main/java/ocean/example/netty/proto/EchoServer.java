@@ -1,4 +1,4 @@
-package ocean.example.messagePack.echo;
+package ocean.example.netty.proto;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,12 +8,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import ocean.example.messagePack.MsgpackDecoder;
-import ocean.example.messagePack.MsgpackEncoder;
+import com.ocean.study.service.MytestProto.SignInPrize;
+
 
 /**
  * <一句话描述>
@@ -44,17 +46,10 @@ public class EchoServer
                     protected void initChannel(SocketChannel socketChannel)
                         throws Exception
                     {
-                        socketChannel.pipeline()
-                            .addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4));
-                        socketChannel.pipeline().addLast("msgpack decoder", new MsgpackDecoder());
-
-                        //ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
-                        //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
-                        //socketChannel.pipeline().addLast(new StringDecoder());
-                        //在MessagePack编码器前增加2个字节的消息长度
-                        socketChannel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(4));
-                        socketChannel.pipeline().addLast("msgpack encoder", new MsgpackEncoder());
-
+                        socketChannel.pipeline().addLast(new ProtobufVarint32FrameDecoder());
+                        socketChannel.pipeline().addLast(new ProtobufDecoder(SignInPrize.getDefaultInstance()));
+                        socketChannel.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
+                        socketChannel.pipeline().addLast(new ProtobufEncoder());
                         socketChannel.pipeline().addLast(new EchoServerHandler());
                     }
                 });

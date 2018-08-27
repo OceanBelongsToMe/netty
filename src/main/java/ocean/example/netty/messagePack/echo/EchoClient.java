@@ -1,6 +1,5 @@
-package ocean.example.proto;
+package ocean.example.netty.messagePack.echo;
 
-import com.ocean.study.service.MytestProto;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,10 +8,10 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import ocean.example.netty.messagePack.MsgpackDecoder;
+import ocean.example.netty.messagePack.MsgpackEncoder;
 
 /**
  * <一句话描述>
@@ -40,10 +39,19 @@ public class EchoClient
                     protected void initChannel(SocketChannel socketChannel)
                         throws Exception
                     {
-                        socketChannel.pipeline().addLast(new ProtobufVarint32FrameDecoder());
-                        socketChannel.pipeline().addLast(new ProtobufDecoder(MytestProto.SignInPrize.getDefaultInstance()));
-                        socketChannel.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
-                        socketChannel.pipeline().addLast(new ProtobufEncoder());
+                        //在MessagePack解码器前增加LengthFieldBasedFrameDecoder，用于处理半包消息
+                        socketChannel.pipeline()
+                            .addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535, 0, 4, 0, 4));
+
+                        socketChannel.pipeline().addLast("msgpack decoder", new MsgpackDecoder());
+
+                        //ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
+                        //socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
+                        //socketChannel.pipeline().addLast(new StringDecoder());
+                        //在MessagePack编码器前增加LengthFieldPrepender，在ByteBuf前增加2个字节的消息长度
+                        socketChannel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(4));
+
+                        socketChannel.pipeline().addLast("msgpack encoder", new MsgpackEncoder());
                         socketChannel.pipeline().addLast(new EchoClientHandler());
                     }
                 });

@@ -1,9 +1,7 @@
-package ocean.example.messagePack;
+package ocean.example.netty.messagePack;
 
-import org.msgpack.annotation.Index;
 import org.msgpack.annotation.Message;
 
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

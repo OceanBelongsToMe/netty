@@ -1,4 +1,4 @@
-package ocean.example.fileserver;
+package ocean.example.netty.fileserver;
 
 /**
  * <一句话描述>

@@ -1,4 +1,4 @@
-package ocean.example.thread;
+package ocean.example.netty.thread;
 
 import java.util.concurrent.TimeUnit;
 
