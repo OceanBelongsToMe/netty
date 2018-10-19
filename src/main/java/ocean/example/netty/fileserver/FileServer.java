@@ -24,7 +24,7 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 public final class FileServer
 {
     // 这里目录要写完整的相对路径，包括main/java
-    private static final String DEFAULT_URL = "/src/main/java/netty/";
+    private static final String DEFAULT_URL = "/src/main/java/";
 
     public void run(final int port, final String url)
         throws Exception

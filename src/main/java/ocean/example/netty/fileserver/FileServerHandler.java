@@ -132,7 +132,7 @@ public class FileServerHandler extends SimpleChannelInboundHandler<FullHttpReque
                 }
                 else
                 {
-                    System.err.println("Transfer progress: " + (progress*100.0000/total)+"%");
+                    System.err.println("Transfer progress: " + (progress * 100.0000 / total) + "%");
                 }
             }
 

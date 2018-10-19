@@ -20,6 +20,8 @@ public class Address
 
     private String country;
 
+    private String postCode;
+
     public String getStreet1()
     {
         return street1;
@@ -70,6 +72,16 @@ public class Address
         this.country = country;
     }
 
+    public String getPostCode()
+    {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode)
+    {
+        this.postCode = postCode;
+    }
+
     @Override
     public String toString()
     {
@@ -79,6 +91,7 @@ public class Address
             ", city='" + city + '\'' +
             ", state='" + state + '\'' +
             ", country='" + country + '\'' +
+            ", postCode='" + postCode + '\'' +
             '}';
     }
 }

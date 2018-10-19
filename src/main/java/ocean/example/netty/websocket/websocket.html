@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket</title>
+</head>
+<body>
+<script>
+    var socket;
+    if (!window.WebSocket) {
+        window.WebSocket = window.MozWebSocket;
+    }
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:8080/websocket");
+        socket.onmessage = function (ev) {
+            setInput(ev.data);
+        };
+        socket.onopen = function (ev) {
+            setInput("Websocket 连接打开，可可正常通信");
+        };
+        socket.onclose = function (ev) {
+            setInput("Websocket 连接关闭");
+        };
+
+        socket.onerror = function (evt) {
+            alert(evt.data)
+        };
+    } else {
+        alert("浏览器不支持websocket协议");
+    }
+
+    function setInput(data) {
+        var input = document.getElementById("responseText");
+        input.value = "";
+        input.value = data;
+    }
+
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+            socket.send(message);
+        } else {
+            alert("未成功建立websocket连接");
+        }
+    }
+</script>
+<form onsubmit="return false;">
+    <input name="message" type="text" value="Websocket连接"/>
+    <br><br>
+    <input type="button" value="send WebSocket Message" onclick="send(this.form.message.value)"/>
+    <hr color="red">
+    <h3>Websocket响应消息</h3>
+    <textarea id="responseText" style="width: 500px;height: 300px;"></textarea>
+</form>
+</body>
+</html>
